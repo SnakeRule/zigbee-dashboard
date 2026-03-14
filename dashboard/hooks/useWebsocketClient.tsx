@@ -1,19 +1,55 @@
-import { useEffect } from "react";
+import { handleDeviceUpdate } from "@/zigbee-devices/deviceHandler";
+import { DeviceType, RawDevice, ZigbeeDevice } from "@/zigbee-devices/types";
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
+function handleDevicesMsg(msg: object) {
+  const newDevices: Record<string, ZigbeeDevice> = {};
+  for (const device of msg as RawDevice[]) {
+    newDevices[device.friendly_name] = {
+      deviceType: device.model_id as DeviceType,
+      friendlyName: device.friendly_name,
+      ieeeAddress: device.ieee_address,
+    };
+  }
+  return newDevices;
+}
+
 export default function useWebsocketClient() {
+  const [connected, setConnected] = useState(false);
+  const [devices, setDevices] = useState<Record<string, ZigbeeDevice>>({});
+
   useEffect(() => {
     const socket = io("http://localhost:3001");
 
     socket.on("connect", () => {
-      console.log(socket.id);
+      setConnected(true);
     });
-    socket.on("devices", (msg) => {
-      console.log(msg);
+    socket.on("disconnect", () => {
+      setConnected(false);
+    });
+
+    socket.onAny((event: string, msg) => {
+      if (event === "zigbee2mqtt/bridge/devices") {
+        setDevices(handleDevicesMsg(msg));
+      }
+      setDevices((prev) => {
+        const matchingDevice =
+          prev[event.substring(event.lastIndexOf("/") + 1)];
+
+        return matchingDevice
+          ? handleDeviceUpdate(matchingDevice, prev, msg)
+          : prev;
+      });
     });
 
     return () => {
       socket.disconnect();
     };
   }, []);
+
+  return {
+    connected,
+    devices,
+  };
 }

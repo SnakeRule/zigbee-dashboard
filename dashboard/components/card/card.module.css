@@ -1,0 +1,5 @@
+.card-container {
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    background-color: var(--panel);
+}
