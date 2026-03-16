@@ -20,7 +20,7 @@ export default function useWebsocketClient() {
   const [devices, setDevices] = useState<Record<string, ZigbeeDevice>>({});
 
   useEffect(() => {
-    const socket = io("http://localhost:3001");
+    const socket = io("http://192.168.1.23:3001");
 
     socket.on("connect", () => {
       setConnected(true);

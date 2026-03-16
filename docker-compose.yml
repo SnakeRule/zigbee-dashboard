@@ -33,4 +33,4 @@ services:
         depends_on:
             - zigbee2mqtt
         ports:
-            - 3000:3000
+            - 3001:3001
