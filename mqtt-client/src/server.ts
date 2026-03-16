@@ -1,7 +1,7 @@
 import mqtt from "mqtt";
 import { initWebsocketServer } from "./websocket";
 
-const client = mqtt.connect("mqtt://zigbee2mqtt");
+const client = mqtt.connect("mqtt://mosquitto");
 const io = initWebsocketServer();
 
 // Store the latest message for every topic (including devices list)
