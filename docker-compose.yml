@@ -3,6 +3,13 @@ services:
         container_name: mosquitto
         image: eclipse-mosquitto:2.1.2-alpine
         restart: unless-stopped
+        environment:
+            - TZ=Europe/Helsinki
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10m"
+                max-file: "3"
         volumes:
             - ./mosquitto/data:/mosquitto/data
             - ./mosquitto/config:/mosquitto/config
@@ -22,7 +29,12 @@ services:
             # Frontend port
             - 8080:8080
         environment:
-            - TZ=Europe/Berlin
+            - TZ=Europe/Helsinki
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10m"
+                max-file: "3"
         devices:
             # Make sure this matched your adapter location
             - /dev/ttyUSB0
@@ -30,6 +42,13 @@ services:
         container_name: mqtt-client
         build: ./mqtt-client
         restart: unless-stopped
+        environment:
+            - TZ=Europe/Helsinki
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10m"
+                max-file: "3"
         depends_on:
             - zigbee2mqtt
         ports:
