@@ -48,7 +48,6 @@ client.on("message", (topic, message) => {
 
 io.on("connection", (socket) => {
   console.log("Client connected");
-  client.publish("zigbee2mqtt/bridge/devices", JSON.stringify({}));
 
   // Send the latest state for all topics (devices, sensors, etc.)
   Object.keys(state).forEach((topic) => {
