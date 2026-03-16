@@ -26,3 +26,11 @@ services:
         devices:
             # Make sure this matched your adapter location
             - /dev/ttyUSB0
+    mqtt-client:
+        container_name: mqtt-client
+        build: ./mqtt-client
+        restart: unless-stopped
+        depends_on:
+            - zigbee2mqtt
+        ports:
+            - 3000:3000
