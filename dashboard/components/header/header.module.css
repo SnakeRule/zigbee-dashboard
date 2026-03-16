@@ -1,9 +1,10 @@
 .nav {
     height: 80px;
     display:flex;
+    justify-content: space-between;
     align-items: center;
-    padding-left: var(--spacing-xs);
-    padding-right: var(--spacing-xs);
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
     background-color: var(--panel);
     border-bottom: 1px solid var(--border-color);
 }

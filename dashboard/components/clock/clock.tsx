@@ -3,7 +3,7 @@
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
-const TIME_FORMAT = "HH:MM:ss";
+const TIME_FORMAT = "HH:mm:ss";
 
 export function Clock() {
   const [time, setTime] = useState(dayjs().format(TIME_FORMAT));
@@ -16,5 +16,5 @@ export function Clock() {
     };
   }, []);
 
-  return <h3>{time}</h3>;
+  return <h2>{time}</h2>;
 }

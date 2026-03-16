@@ -8,6 +8,8 @@
 
   --spacing-xs: 8px;
   --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 48px;
 
   --border-size: 1px;
 }
