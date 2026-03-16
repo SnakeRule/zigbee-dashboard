@@ -1,18 +1,30 @@
 import mqtt from "mqtt";
 import { initWebsocketServer } from "./websocket";
 
-const client = mqtt.connect("mqtt://mosquitto");
+const MQTT_HOST = "mqtt://mosquitto";
+
+const client = mqtt.connect(MQTT_HOST, {
+  reconnectPeriod: 3000, // Reconnect every 3 seconds if disconnected
+});
 const io = initWebsocketServer();
 
-// Store the latest message for every topic (including devices list)
 const state: Record<string, any> = {};
 
 client.on("connect", () => {
+  console.log("Connected to MQTT broker");
   client.subscribe("zigbee2mqtt/#", (err) => {
-    if (!err) {
-      console.log("Connected to MQTT broker");
+    if (err) {
+      console.error("Failed to subscribe to zigbee2mqtt/#", err);
     }
   });
+});
+
+client.on("error", (err) => {
+  console.error("MQTT Client Error:", err);
+});
+
+client.on("reconnect", () => {
+  console.log("Reconnecting to MQTT broker...");
 });
 
 client.on("message", (topic, message) => {
@@ -36,7 +48,7 @@ client.on("message", (topic, message) => {
 
 io.on("connection", (socket) => {
   console.log("Client connected");
-  client.publish("zigbee2mqtt/bridge/devices", "");
+  client.publish("zigbee2mqtt/bridge/devices", JSON.stringify({}));
 
   // Send the latest state for all topics (devices, sensors, etc.)
   Object.keys(state).forEach((topic) => {
