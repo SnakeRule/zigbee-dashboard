@@ -8,7 +8,6 @@
 .sensor-name-label {
     justify-self: center;
     align-self: center;
-    padding: var(--spacing-xs);
     margin: 0px;
     text-align: center;
     word-break: break-word; /* Allows long unbreakable text to wrap instead of blowing out the card */
@@ -17,23 +16,30 @@
 .lower-container {
     display: flex;
     flex: 1;
-    gap: var(--spacing-md);
     width: 100%;
     justify-content: flex-start;
-    align-items: stretch;
-    flex-direction: row;
+    flex-direction: column;
+}
+
+.device-container {
+    display:flex;
+    flex: 1;
+    gap: var(--spacing-xs);
+    flex-direction: column;
+    padding-top: var(--spacing-xs);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .values-container {
     display: flex;
     flex: 1;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
     gap: var(--spacing-xs);
+    justify-content: space-between;
 }
 
 .battery-container {
     display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-xxs);
 }

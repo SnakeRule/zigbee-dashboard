@@ -8,15 +8,14 @@ import styles from "./page.module.css";
 export default function Home() {
   const { devices } = useWebsocketClient();
 
+  const doors = Object.values(devices).filter(
+    (device) => device.deviceType === DeviceType.DOOR_SENSOR,
+  );
+
   return (
     devices && (
       <div className={styles["dashboard-items-container"]}>
-        {Object.keys(devices).map((key) => {
-          const device = devices[key];
-          if (device.deviceType === DeviceType.DOOR_SENSOR) {
-            return <DoorSensorCard sensor={device} key={device.ieeeAddress} />;
-          }
-        })}
+        <DoorSensorCard sensors={doors} />
       </div>
     )
   );
