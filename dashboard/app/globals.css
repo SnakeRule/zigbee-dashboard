@@ -13,6 +13,7 @@
   --spacing-xl: 48px;
 
   --border-size: 1px;
+  --border-radius-xs: 4px;
 }
 
 body {

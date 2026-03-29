@@ -1,0 +1,23 @@
+.sensor-card {
+    display: flex;
+    flex-direction: column; 
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
+.sensor-name-label {
+    justify-self: center;
+    align-self: center;
+    margin: 0px;
+    text-align: center;
+    word-break: break-word; /* Allows long unbreakable text to wrap instead of blowing out the card */
+}
+
+.lower-container {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding-top: var(--spacing-xxs)
+}

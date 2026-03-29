@@ -1,16 +1,24 @@
 import { handleDeviceUpdate } from "@/zigbee-devices/deviceHandler";
-import { DeviceType, RawDevice, ZigbeeDevice } from "@/zigbee-devices/types";
+import { RawDevice, ZigbeeDevice } from "@/zigbee-devices/types";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
-function handleDevicesMsg(msg: object) {
+function handleDevicesMsg(
+  msg: RawDevice[],
+  prev: Record<string, ZigbeeDevice>,
+) {
   const newDevices: Record<string, ZigbeeDevice> = {};
-  for (const device of msg as RawDevice[]) {
-    newDevices[device.friendly_name] = {
-      deviceType: device.model_id as DeviceType,
+  for (const device of msg) {
+    const parsedDevice = {
+      ...prev[device.friendly_name],
       friendlyName: device.friendly_name,
       ieeeAddress: device.ieee_address,
+      deviceType: device.model_id,
     };
+
+    if (parsedDevice) {
+      newDevices[parsedDevice.friendlyName] = parsedDevice;
+    }
   }
   return newDevices;
 }
@@ -31,15 +39,24 @@ export default function useWebsocketClient() {
 
     socket.onAny((event: string, msg) => {
       if (event === "zigbee2mqtt/bridge/devices") {
-        setDevices(handleDevicesMsg(msg));
+        setDevices((prev) => handleDevicesMsg(msg, prev));
+        return;
       }
       setDevices((prev) => {
         const matchingDevice =
           prev[event.substring(event.lastIndexOf("/") + 1)];
 
-        return matchingDevice
-          ? handleDeviceUpdate(matchingDevice, prev, msg)
-          : prev;
+        if (!matchingDevice) {
+          return prev;
+        }
+
+        return {
+          ...prev,
+          [matchingDevice.friendlyName]: {
+            ...matchingDevice,
+            ...handleDeviceUpdate(msg),
+          },
+        };
       });
     });
 

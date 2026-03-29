@@ -15,8 +15,7 @@ export async function GET() {
   query.searchParams.append("lon", "24.1066509");
   query.searchParams.append("appid", apiKey);
   query.searchParams.append("units", "metric");
-  const res = await fetch(query);
-  const weather = await res.json();
+  const res = await (await fetch(query)).json();
 
-  return Response.json(weather);
+  return Response.json(res);
 }

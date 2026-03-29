@@ -1,32 +1,40 @@
-import {
-  DeviceType,
-  IkeaDoorSensorState,
-  ZigbeeDevice,
-  ZigbeeDeviceState,
-} from "./types";
+import { IkeaDoorSensorState } from "./ikeaDoorSensor";
+import { TemperatureHumiditySensorState } from "./temperatureHumiditySensor";
+import { DeviceType, ZigbeeDevice } from "./types";
 
-function updateDoorSensor(
-  device: ZigbeeDevice,
-  devicesDict: Record<string, ZigbeeDevice>,
-  newState: IkeaDoorSensorState,
-) {
-  return {
-    ...devicesDict,
-    [device.friendlyName]: {
-      ...device,
-      battery: newState.battery ?? device.battery,
-      contact: newState.contact ?? device.contact,
-    },
-  };
+/**
+ * We can get state updates that don't contain all the properties
+ * To prevent overwriting existing values with undefined, we remove undefined values from the returning object
+ * */
+function filterUndefinedValues(object: object) {
+  return Object.fromEntries(
+    Object.entries(object).filter((arr) => arr[1] !== undefined),
+  );
 }
 
-export function handleDeviceUpdate(
-  device: ZigbeeDevice,
-  devicesDict: Record<string, ZigbeeDevice>,
-  newState: ZigbeeDeviceState,
-) {
-  switch (device.deviceType) {
+function updateDoorSensor(newState: IkeaDoorSensorState) {
+  return filterUndefinedValues({
+    battery: newState.battery,
+    contact: newState.contact,
+  });
+}
+
+function updateTemperatureSensor(newState: TemperatureHumiditySensorState) {
+  return filterUndefinedValues({
+    battery: newState.battery,
+    humidity: newState.humidity,
+    temperature: newState.temperature,
+  });
+}
+
+export function handleDeviceUpdate(newState: ZigbeeDevice) {
+  //updateSensor(device, devicesDict)
+  switch (newState.deviceType) {
     case DeviceType.DOOR_SENSOR:
-      return updateDoorSensor(device, devicesDict, newState);
+      return updateDoorSensor(newState);
+    case DeviceType.TEMPERATURE_SENSOR:
+      return updateTemperatureSensor(newState);
+    default:
+      return newState;
   }
 }
