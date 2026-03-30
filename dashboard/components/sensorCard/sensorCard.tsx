@@ -11,7 +11,7 @@ type SensorCardProps = {
 export function SensorCard({ title, children }: SensorCardProps) {
   return (
     <Card>
-      <div className={styles["temperature-sensor-card"]}>
+      <div className={styles["sensor-card"]}>
         <h3 className={styles["sensor-name-label"]}>{title}</h3>
         <div className={styles["lower-container"]}>{children}</div>
       </div>

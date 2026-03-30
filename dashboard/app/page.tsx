@@ -6,19 +6,17 @@ import { DeviceType } from "@/zigbee-devices/types";
 import styles from "./page.module.css";
 import { TemperatureSensorCard } from "@/components/temperatureSensorCard/temperatureSensorCard";
 import { PlantSoilSensorCard } from "@/components/plantSoilSensorCard/plantSoilSensorCard";
+import { filterDevices } from "@/zigbee-devices/deviceHandler";
 
 export default function Home() {
   const { devices } = useWebsocketClient();
 
-  const doors = Object.values(devices).filter(
-    (device) => device.deviceType === DeviceType.DOOR_SENSOR,
+  const doors = filterDevices(devices, DeviceType.DOOR_SENSOR);
+  const tempetureSensors = filterDevices(
+    devices,
+    DeviceType.TEMPERATURE_SENSOR,
   );
-  const tempetureSensors = Object.values(devices).filter(
-    (device) => device.deviceType === DeviceType.TEMPERATURE_SENSOR,
-  );
-  const plantSoilSensors = Object.values(devices).filter(
-    (device) => device.deviceType === DeviceType.PLANT_SOIL_SENSOR,
-  );
+  const plantSoilSensors = filterDevices(devices, DeviceType.PLANT_SOIL_SENSOR);
 
   return (
     devices && (

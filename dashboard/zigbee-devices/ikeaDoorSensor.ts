@@ -6,6 +6,7 @@ export type IkeaDoorSensor = ZigbeeDeviceBase &
   };
 
 export type IkeaDoorSensorState = {
+  ieeeAddress: string;
   contact?: boolean;
   battery?: number;
 };

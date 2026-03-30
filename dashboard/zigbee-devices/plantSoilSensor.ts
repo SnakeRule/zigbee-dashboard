@@ -1,6 +1,7 @@
 import { DeviceType, ZigbeeDeviceBase } from "./types";
 
 export type PlantSoilSensorState = {
+  ieeeAddress: string;
   temperature?: number;
   humidity?: number;
   soil_moisture?: number;
