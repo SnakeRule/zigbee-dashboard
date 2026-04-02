@@ -3,6 +3,7 @@
 import { useWeather } from "@/hooks/useWeather";
 import Image from "next/image";
 import styles from "./weather.module.css";
+import { Text } from "../text/text";
 
 export function Weather() {
   const weather = useWeather();
@@ -17,7 +18,9 @@ export function Weather() {
           width={80}
           height={80}
         />
-        <h3>{(weather.data.main.temp as number).toFixed(0)}°C</h3>
+        <Text tag="p" variant="text-xl">
+          {(weather.data.main.temp as number).toFixed(0)}°C
+        </Text>
       </div>
     )
   );

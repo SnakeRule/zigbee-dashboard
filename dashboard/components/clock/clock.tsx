@@ -2,6 +2,7 @@
 
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import { Text } from "../text/text";
 
 const TIME_FORMAT = "HH:mm:ss";
 
@@ -16,5 +17,9 @@ export function Clock() {
     };
   }, []);
 
-  return <h2>{time}</h2>;
+  return (
+    <Text tag="p" variant="text-xl">
+      {time}
+    </Text>
+  );
 }
