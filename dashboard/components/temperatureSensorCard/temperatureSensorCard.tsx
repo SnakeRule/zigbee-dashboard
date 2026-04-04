@@ -14,6 +14,7 @@ export function TemperatureSensorCard({ sensors }: TemperatureSensorCardProps) {
         <SensorValues
           key={sensor.ieeeAddress}
           name={sensor.friendlyName}
+          ieeeAddress={sensor.ieeeAddress}
           values={[
             {
               icon: <Thermometer size={20} />,

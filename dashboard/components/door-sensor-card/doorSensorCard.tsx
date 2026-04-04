@@ -24,6 +24,7 @@ export function DoorSensorCard({ sensors }: DoorSensorCardProps) {
         <SensorValues
           name={sensor.friendlyName}
           key={sensor.ieeeAddress}
+          ieeeAddress={sensor.ieeeAddress}
           values={[
             {
               icon: getDoorIcon(sensor.contact),

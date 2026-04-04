@@ -11,12 +11,16 @@ type SensorValue = {
 
 type SensorValuesProps = {
   name: string;
+  ieeeAddress: string;
   values: SensorValue[];
 };
 
-export function SensorValues({ name, values }: SensorValuesProps) {
+export function SensorValues({ name, ieeeAddress, values }: SensorValuesProps) {
   return (
-    <Link href={`/device/${name}`} className={styles["device-container"]}>
+    <Link
+      href={`/device/${ieeeAddress}`}
+      className={styles["device-container"]}
+    >
       <Text tag="h4" variant="text-large">
         {name}
       </Text>

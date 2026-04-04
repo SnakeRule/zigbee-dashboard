@@ -14,6 +14,7 @@ export function PlantSoilSensorCard({ sensors }: PlantSoilCardProps) {
         <SensorValues
           key={sensor.ieeeAddress}
           name={sensor.friendlyName}
+          ieeeAddress={sensor.ieeeAddress}
           values={[
             {
               icon: <Flower2 size={20} />,
