@@ -44,6 +44,8 @@ services:
         restart: unless-stopped
         environment:
             - TZ=Europe/Helsinki
+            - USE_MOCK=false
+            - MQTT_HOST=mqtt://mosquitto
         logging:
             driver: "json-file"
             options:
