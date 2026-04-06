@@ -50,7 +50,7 @@ services:
                 max-size: "10m"
                 max-file: "3"
         volumes:
-            - ./sqlite:/app/sqlite
+            - ./mqtt-client/sqlite:/app/sqlite
         depends_on:
             - zigbee2mqtt
         ports:
