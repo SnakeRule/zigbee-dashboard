@@ -46,28 +46,38 @@ export function insertValueIntoDb(
 ) {
   try {
     const normalizedValue = typeof value === "boolean" ? Number(value) : value;
-    db.prepare(
-      "INSERT INTO sensors(name) VALUES (?) ON CONFLICT(name) DO NOTHING",
-    ).run(sensor);
-    db.prepare(
-      "INSERT INTO parameters(name) VALUES (?) ON CONFLICT(name) DO NOTHING",
-    ).run(parameter);
-
+    let sensorId: number;
     const sensorRow = db
       .prepare("SELECT id FROM sensors WHERE name = ?")
-      .get(sensor) as {
-      id: number;
-    };
+      .get(sensor) as { id: number } | undefined;
+    if (sensorRow) {
+      sensorId = sensorRow.id;
+    } else {
+      const sensorInsert = db
+        .prepare("INSERT INTO sensors(name) VALUES (?)")
+        .run(sensor);
+      sensorId = Number(sensorInsert.lastInsertRowid);
+    }
+
+    let parameterId: number;
     const parameterRow = db
       .prepare("SELECT id FROM parameters WHERE name = ?")
-      .get(parameter) as { id: number };
+      .get(parameter) as { id: number } | undefined;
+    if (parameterRow) {
+      parameterId = parameterRow.id;
+    } else {
+      const parameterInsert = db
+        .prepare("INSERT INTO parameters(name) VALUES (?)")
+        .run(parameter);
+      parameterId = Number(parameterInsert.lastInsertRowid);
+    }
 
     db.prepare(
       `
     INSERT INTO sensor_values (sensor_id, parameter_id, value)
     VALUES (?, ?, ?)
   `,
-    ).run(sensorRow.id, parameterRow.id, normalizedValue);
+    ).run(sensorId, parameterId, normalizedValue);
   } catch (e) {
     console.error(e);
   }

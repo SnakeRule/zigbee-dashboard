@@ -13,6 +13,13 @@ export function handleMqttMessage(
   const payload = message.toString();
 
   try {
+    // Don't handle device value messages until we have the devices stored
+    if (
+      !state["zigbee2mqtt/bridge/devices"] &&
+      topic !== "zigbee2mqtt/bridge/devices"
+    ) {
+      return;
+    }
     const msg = JSON.parse(payload);
 
     // If devices list is saved in local state, attempt to store value in database
@@ -25,9 +32,10 @@ export function handleMqttMessage(
 
       // Match the friendly name from the topic to the one in the devices list
       const targetDevice = (
-        state["zigbee2mqtt/bridge/devices"] as [
-          { friendly_name: string; ieee_address: string },
-        ]
+        state["zigbee2mqtt/bridge/devices"] as {
+          friendly_name: string;
+          ieee_address: string;
+        }[]
       ).find(
         (device: { friendly_name: string }) =>
           device.friendly_name === friendlyName,
