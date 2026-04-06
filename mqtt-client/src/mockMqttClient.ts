@@ -1,8 +1,14 @@
+import Database from "better-sqlite3";
 import { ZigbeeDevice, DeviceType } from "./types/mockDevices";
 import { generateDevice, generateRandomValues } from "./utils/mockUtils";
 import { initWebsocketServer } from "./websocket";
+import { fieldsToSave } from "./utils/sqLiteUtils";
+import { insertValueIntoDb } from "./sqLite";
 
-export function initMockMqttClient(io: ReturnType<typeof initWebsocketServer>) {
+export function initMockMqttClient(
+  io: ReturnType<typeof initWebsocketServer>,
+  db: ReturnType<typeof Database>,
+) {
   const state: Record<string, any> = {};
   let devices: ZigbeeDevice[] = [];
   const devicesTopic = "zigbee2mqtt/bridge/devices";
@@ -22,6 +28,16 @@ export function initMockMqttClient(io: ReturnType<typeof initWebsocketServer>) {
     for (const device of devices) {
       const topic = `zigbee2mqtt/${device.friendly_name}`;
       state[topic] = device;
+      for (const field of fieldsToSave) {
+        if (state[topic][field] !== undefined) {
+          insertValueIntoDb(
+            db,
+            state[topic].ieee_address,
+            field,
+            state[topic][field],
+          );
+        }
+      }
       io.emit(topic, device);
     }
   }, 10000);
@@ -33,7 +49,6 @@ export function initMockMqttClient(io: ReturnType<typeof initWebsocketServer>) {
     socket.emit(devicesTopic, state[devicesTopic]);
     // Send the latest state for all topics (devices, sensors, etc.)
     Object.keys(state).forEach((topic) => {
-      console.log(state[topic]);
       socket.emit(topic, state[topic]);
     });
   });

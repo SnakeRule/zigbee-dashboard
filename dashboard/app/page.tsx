@@ -13,7 +13,7 @@ export default function Home() {
   const { devices } = useContext(ZigbeeDeviceContext);
 
   const doors = filterDevices(devices, DeviceType.DOOR_SENSOR);
-  const tempetureSensors = filterDevices(
+  const temperatureSensors = filterDevices(
     devices,
     DeviceType.TEMPERATURE_SENSOR,
   );
@@ -22,7 +22,7 @@ export default function Home() {
   return (
     devices && (
       <div className={styles["dashboard-items-container"]}>
-        <TemperatureSensorCard sensors={tempetureSensors} />
+        <TemperatureSensorCard sensors={temperatureSensors} />
         <PlantSoilSensorCard sensors={plantSoilSensors} />
         <DoorSensorCard sensors={doors} />
       </div>

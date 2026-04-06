@@ -1,2 +1,4 @@
 data
 mosquitto.log
+mqtt-client/sqlite/*
+!mqtt-client/sqlite/.gitkeep

@@ -6,6 +6,8 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 
+const WEBSOCKET_URL = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
+
 function handleDevicesMsg(msg: RawDevice[]) {
   const newDevices: Record<string, ZigbeeDevice> = {};
   for (const device of msg) {
@@ -28,8 +30,11 @@ export default function useWebsocketClient() {
   >({});
 
   useEffect(() => {
-    const socket = io("http://192.168.1.23:3001");
-    //const socket = io("http://localhost:3001");
+    if (WEBSOCKET_URL === undefined) {
+      console.error("No WEBSOCKET_URL defined!");
+      return;
+    }
+    const socket = io(WEBSOCKET_URL);
 
     socket.on("connect", () => {
       setConnected(true);

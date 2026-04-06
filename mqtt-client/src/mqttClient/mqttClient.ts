@@ -1,7 +1,12 @@
 import mqtt from "mqtt";
-import { initWebsocketServer } from "./websocket";
+import { initWebsocketServer } from "../websocket";
+import Database from "better-sqlite3";
+import { handleMqttMessage } from "./messageHandler";
 
-export function initMqttClient(io: ReturnType<typeof initWebsocketServer>) {
+export function initMqttClient(
+  io: ReturnType<typeof initWebsocketServer>,
+  db: ReturnType<typeof Database>,
+) {
   const state: Record<string, any> = {};
   const MQTT_HOST = process.env.MQTT_HOST;
 
@@ -31,22 +36,7 @@ export function initMqttClient(io: ReturnType<typeof initWebsocketServer>) {
   });
 
   client.on("message", (topic, message) => {
-    const payload = message.toString();
-
-    try {
-      const msg = JSON.parse(payload);
-
-      // Update local state cache
-      state[topic] = msg;
-
-      // Forward every message to the websocket using the topic as the event name
-      io.emit(topic, msg);
-    } catch (err) {
-      // For non-JSON, store as string
-      state[topic] = payload;
-      // Forward non-JSON messages as strings
-      //io.emit(topic, payload);
-    }
+    handleMqttMessage(topic, message, state, db, io);
   });
 
   io.on("connection", (socket) => {
