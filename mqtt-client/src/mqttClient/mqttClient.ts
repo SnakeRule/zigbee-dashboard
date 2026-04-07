@@ -2,12 +2,13 @@ import mqtt from "mqtt";
 import { initWebsocketServer } from "../websocket";
 import Database from "better-sqlite3";
 import { handleMqttMessage } from "./messageHandler";
+import { initStateHandler } from "./stateHandler";
 
 export function initMqttClient(
   io: ReturnType<typeof initWebsocketServer>,
   db: ReturnType<typeof Database>,
 ) {
-  const state: Record<string, any> = {};
+  const stateHandler = initStateHandler();
   const MQTT_HOST = process.env.MQTT_HOST;
 
   if (!MQTT_HOST) {
@@ -36,15 +37,15 @@ export function initMqttClient(
   });
 
   client.on("message", (topic, message) => {
-    handleMqttMessage(topic, message, state, db, io);
+    handleMqttMessage(topic, message, db, io, stateHandler);
   });
 
   io.on("connection", (socket) => {
     console.log("Client connected");
 
     // Send the latest state for all topics (devices, sensors, etc.)
-    Object.keys(state).forEach((topic) => {
-      socket.emit(topic, state[topic]);
+    Object.keys(stateHandler.getAllStates()).forEach((topic) => {
+      socket.emit(topic, stateHandler.getDeviceState(topic));
     });
   });
 }
