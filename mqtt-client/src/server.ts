@@ -26,7 +26,7 @@ async function startServer() {
       server.register(v1Routes, { prefix: "/api/v1" });
 
       const res = await server.listen({
-        port: 3001,
+        port: 8000,
         host: FASTIFY_HOST ?? "127.0.0.1",
       });
       console.log("Server listening: ", res);
