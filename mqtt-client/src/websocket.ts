@@ -1,10 +1,8 @@
-import { createServer } from "http";
+import { FastifyInstance } from "fastify";
 import { Server } from "socket.io";
 
-export function initWebsocketServer() {
-  const server = createServer();
-
-  const io = new Server(server, {
+export function initWebsocketServer(server: FastifyInstance) {
+  const io = new Server(server.server, {
     cors: {
       origin: "*",
       methods: ["GET", "POST"],

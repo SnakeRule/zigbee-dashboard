@@ -3,7 +3,7 @@ import { ZigbeeDevice, DeviceType } from "./types/mockDevices";
 import { generateDevice, generateRandomValues } from "./utils/mockUtils";
 import { initWebsocketServer } from "./websocket";
 import { fieldsToSave } from "./utils/sqLiteUtils";
-import { insertValueIntoDb } from "./sqLite";
+import { insertValueIntoDb } from "./sqlite/sqLite";
 
 export function initMockMqttClient(
   io: ReturnType<typeof initWebsocketServer>,

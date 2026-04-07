@@ -1,11 +1,11 @@
 import Database from "better-sqlite3";
-import { insertValueIntoDb } from "../sqLite";
 import {
   findDeviceByFriendlyName,
   shouldSaveValueToDb,
 } from "../utils/messageUtils";
 import { fieldsToSave } from "../utils/sqLiteUtils";
 import { initStateCache } from "./mqttCache";
+import { insertValueIntoDb } from "../sqlite/sqLite";
 
 export function handleDeviceValues(
   topic: string,
