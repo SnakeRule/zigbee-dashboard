@@ -35,7 +35,7 @@ async function startServer() {
       process.exit(1);
     }
   } catch (e) {
-    server.log.error(e);
+    console.error(e);
     process.exit(1);
   }
 }
