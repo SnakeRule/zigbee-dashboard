@@ -8,7 +8,5 @@ export function initWebsocketServer(server: FastifyInstance) {
       methods: ["GET", "POST"],
     },
   });
-  io.listen(3001);
-
   return io;
 }

@@ -57,5 +57,5 @@ services:
         depends_on:
             - zigbee2mqtt
         ports:
-            - 3001:3001
+            - 8000:8000
 
