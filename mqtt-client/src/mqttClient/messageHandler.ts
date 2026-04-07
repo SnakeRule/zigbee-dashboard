@@ -30,26 +30,33 @@ export function handleMqttMessage(
       // Get the friendly name of the device from the topic
       const friendlyName = topic.substring(topic.lastIndexOf("/") + 1);
 
-      // Match the friendly name from the topic to the one in the devices list
-      const targetDevice = (
-        state["zigbee2mqtt/bridge/devices"] as {
-          friendly_name: string;
-          ieee_address: string;
-        }[]
-      ).find(
-        (device: { friendly_name: string }) =>
-          device.friendly_name === friendlyName,
-      );
-      if (targetDevice) {
-        for (const field of fieldsToSave) {
-          if (msg[field] !== undefined) {
-            insertValueIntoDb(db, targetDevice.ieee_address, field, msg[field]);
-          }
-        }
-      } else {
-        console.error(
-          "Could not insert device value into db. No matching device found",
+      if (topic === `zigbee2mqtt/${friendlyName}`) {
+        // Match the friendly name from the topic to the one in the devices list
+        const targetDevice = (
+          state["zigbee2mqtt/bridge/devices"] as {
+            friendly_name: string;
+            ieee_address: string;
+          }[]
+        ).find(
+          (device: { friendly_name: string }) =>
+            device.friendly_name === friendlyName,
         );
+        if (targetDevice) {
+          for (const field of fieldsToSave) {
+            if (msg[field] !== undefined) {
+              insertValueIntoDb(
+                db,
+                targetDevice.ieee_address,
+                field,
+                msg[field],
+              );
+            }
+          }
+        } else {
+          console.error(
+            "Could not insert device value into db. No matching device found",
+          );
+        }
       }
     }
 
