@@ -7,6 +7,7 @@ import { initSqLite } from "./sqlite/sqLite";
 import v1Routes from "./api/v1Routes";
 
 const USE_MOCK = process.env.USE_MOCK;
+const FASTIFY_HOST = process.env.FASTIFY_HOST;
 
 const db = initSqLite();
 const server = fastify();
@@ -24,7 +25,10 @@ async function startServer() {
       server.decorate("db", db);
       server.register(v1Routes, { prefix: "/api/v1" });
 
-      const res = await server.listen({ port: 3001 });
+      const res = await server.listen({
+        port: 3001,
+        host: FASTIFY_HOST ?? "127.0.0.1",
+      });
       console.log("Server listening: ", res);
     } else {
       console.error("NO DATABASE CONNECTION, EXITING");
