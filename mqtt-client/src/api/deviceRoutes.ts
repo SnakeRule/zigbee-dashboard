@@ -1,10 +1,10 @@
 import { FastifyInstance } from "fastify";
 import temperatureHumiditySensorRoutes from "./temperatureHumiditySensor/temperatureHumiditySensorRoutes";
 
-async function dbRoutes(fastify: FastifyInstance) {
+async function deviceRoutes(fastify: FastifyInstance) {
   fastify.register(temperatureHumiditySensorRoutes, {
-    prefix: "/temperature-humidity",
+    prefix: "/th",
   });
 }
 
-export default dbRoutes;
+export default deviceRoutes;

@@ -23,7 +23,7 @@ async function getTemperatureHumiditySensorTemperature(
   fastify: FastifyInstance,
 ) {
   fastify.get<IRoute>(
-    "/values/:ieeeAddress/temperature/:from/:to",
+    "/temperature/:ieeeAddress/:from/:to",
     async (request, reply) => {
       const from = DateTime.fromISO(request.params.from).toUTC();
       const to = DateTime.fromISO(request.params.to).toUTC();
