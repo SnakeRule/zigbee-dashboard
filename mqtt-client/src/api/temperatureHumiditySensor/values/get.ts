@@ -1,7 +1,11 @@
 import { FastifyInstance } from "fastify";
 import { DateTime } from "luxon";
 import { temperatureQuery } from "../../../sqlite/queries/temperatureSensor/temperatureQuery";
-import { getSqLiteTimeFormat } from "../../../utils/sqLiteUtils";
+import {
+  downsampleData,
+  downsampledToResponse,
+  getSqLiteTimeFormat,
+} from "../../../utils/sqLiteUtils";
 
 interface IParams {
   ieeeAddress: string;
@@ -39,7 +43,9 @@ async function getTemperatureHumiditySensorTemperature(
         getSqLiteTimeFormat(from),
         getSqLiteTimeFormat(to),
       );
-      return reply.code(200).send(values);
+      const downsampled = downsampleData(values);
+
+      return reply.code(200).send(downsampledToResponse(downsampled));
     },
   );
 }

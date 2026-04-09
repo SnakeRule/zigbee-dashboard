@@ -24,6 +24,7 @@
     "@types/node": "25.3.5",
     "better-sqlite3": "12.8.0",
     "dotenv": "17.4.0",
+    "downsample": "1.4.0",
     "fastify": "5.8.4",
     "luxon": "3.7.2",
     "mqtt": "5.15.0",

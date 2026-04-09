@@ -17,6 +17,9 @@ importers:
       dotenv:
         specifier: 17.4.0
         version: 17.4.0
+      downsample:
+        specifier: 1.4.0
+        version: 1.4.0
       fastify:
         specifier: 5.8.4
         version: 5.8.4
@@ -274,6 +277,9 @@ packages:
   dotenv@17.4.0:
     resolution: {integrity: sha512-kCKF62fwtzwYm0IGBNjRUjtJgMfGapII+FslMHIjMR5KTnwEmBmWLDRSnc3XSNP8bNy34tekgQyDT0hr7pERRQ==}
     engines: {node: '>=12'}
+
+  downsample@1.4.0:
+    resolution: {integrity: sha512-teYPhUPxqwtyICt47t1mP/LjhbRV/ghuKb/LmFDbcZ0CjqFD31tn6rVLZoeCEa1xr8+f2skW8UjRiLiGIKQE4w==}
 
   end-of-stream@1.4.5:
     resolution: {integrity: sha512-ooEGc6HP26xXq/N+GCGOT0JKCLDGrq2bQUZrQ7gyrJiZANJ/8YDTxTpQBXGMn+WbIQXNVpyWymm7KYVICQnyOg==}
@@ -963,6 +969,8 @@ snapshots:
   diff@4.0.4: {}
 
   dotenv@17.4.0: {}
+
+  downsample@1.4.0: {}
 
   end-of-stream@1.4.5:
     dependencies:
