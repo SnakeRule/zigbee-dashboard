@@ -20,6 +20,7 @@ export function downsampleData(
     value: number;
     created_at: string;
   }[],
+  dataPointCount: number,
 ) {
   return Array.from(
     Downsample.LTTB(
@@ -29,7 +30,7 @@ export function downsampleData(
           .toJSDate(),
         y: value.value,
       })),
-      30,
+      dataPointCount,
     ) as ArrayLike<{ x: Date; y: number }>,
   );
 }

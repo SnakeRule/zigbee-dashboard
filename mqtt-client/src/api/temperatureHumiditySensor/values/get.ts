@@ -1,11 +1,8 @@
 import { FastifyInstance } from "fastify";
 import { DateTime } from "luxon";
-import { temperatureQuery } from "../../../sqlite/queries/temperatureSensor/temperatureQuery";
-import {
-  downsampleData,
-  downsampledToResponse,
-  getSqLiteTimeFormat,
-} from "../../../utils/sqLiteUtils";
+import { getSqLiteTimeFormat } from "../../../utils/sqLiteUtils";
+import { sensorValueQuery } from "../../../sqlite/queries/sensorValuesQuery";
+import { SENSOR_PARAMETER } from "../../../types/sqLite";
 
 interface IParams {
   ieeeAddress: string;
@@ -18,9 +15,14 @@ interface IReply {
   400: { error: string };
 }
 
+interface IQuerystring {
+  count?: string;
+}
+
 interface IRoute {
   Params: IParams;
   Reply: IReply;
+  Querystring: IQuerystring;
 }
 
 async function getTemperatureHumiditySensorTemperature(
@@ -29,6 +31,11 @@ async function getTemperatureHumiditySensorTemperature(
   fastify.get<IRoute>(
     "/temperature/:ieeeAddress/:from/:to",
     async (request, reply) => {
+      const count = Number(request.query.count);
+      if (!Number.isInteger(count) || count <= 0) {
+        return reply.code(400).send({ error: "Invalid count" });
+      }
+
       const from = DateTime.fromISO(request.params.from).toUTC();
       const to = DateTime.fromISO(request.params.to).toUTC();
 
@@ -37,15 +44,17 @@ async function getTemperatureHumiditySensorTemperature(
       }
 
       const ieeeAddress = request.params.ieeeAddress;
-      const values = temperatureQuery(
+
+      const values = sensorValueQuery(
         fastify.db,
+        SENSOR_PARAMETER.TEMPERATURE,
         ieeeAddress,
         getSqLiteTimeFormat(from),
         getSqLiteTimeFormat(to),
+        count,
       );
-      const downsampled = downsampleData(values);
 
-      return reply.code(200).send(downsampledToResponse(downsampled));
+      return reply.code(200).send(values);
     },
   );
 }
