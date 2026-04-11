@@ -31,7 +31,7 @@ async function getTemperatureHumiditySensorTemperature(
   fastify.get<IRoute>(
     "/temperature/:ieeeAddress/:from/:to",
     async (request, reply) => {
-      const count = Number(request.query.count);
+      const count = request.query.count ? Number(request.query.count) : 30;
       if (!Number.isInteger(count) || count <= 0) {
         return reply.code(400).send({ error: "Invalid count" });
       }

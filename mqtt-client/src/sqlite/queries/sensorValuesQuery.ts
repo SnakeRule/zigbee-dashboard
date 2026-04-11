@@ -17,7 +17,7 @@ export function sensorValueQuery(
             INNER JOIN parameters ON sensor_values.parameter_id = parameters.id 
             INNER JOIN sensors ON sensor_values.sensor_id = sensors.id 
             WHERE 
-                parameters.name = '?' 
+              parameters.name = ? 
                 AND sensors.name = ? 
                 AND sensor_values.created_at >= ?
                 AND sensor_values.created_at <= ?
