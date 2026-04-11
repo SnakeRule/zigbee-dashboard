@@ -24,6 +24,9 @@ export function sensorValueQuery(
             ORDER BY created_at ASC`,
     )
     .all(parameter, ieeeAddress, from, to) as SensorReturnValues;
-  const downsampled = downsampleData(values, dataPointCount);
-  return downsampledToResponse(downsampled);
+  if (values.length > dataPointCount) {
+    const downsampled = downsampleData(values, dataPointCount);
+    return downsampledToResponse(downsampled);
+  }
+  return values;
 }

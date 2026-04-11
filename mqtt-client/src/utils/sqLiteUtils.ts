@@ -9,6 +9,9 @@ export const fieldsToSave = [
   "contact",
 ];
 
+export const DEFAULT_SAMPLE_COUNT = 30;
+export const MAX_SAMPLE_COUNT = 500;
+
 export const sqLiteTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
 export function getSqLiteTimeFormat(dateTime: DateTime) {

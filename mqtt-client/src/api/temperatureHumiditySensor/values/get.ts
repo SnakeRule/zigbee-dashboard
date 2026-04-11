@@ -1,6 +1,10 @@
 import { FastifyInstance } from "fastify";
 import { DateTime } from "luxon";
-import { getSqLiteTimeFormat } from "../../../utils/sqLiteUtils";
+import {
+  DEFAULT_SAMPLE_COUNT,
+  getSqLiteTimeFormat,
+  MAX_SAMPLE_COUNT,
+} from "../../../utils/sqLiteUtils";
 import { sensorValueQuery } from "../../../sqlite/queries/sensorValuesQuery";
 import { SENSOR_PARAMETER } from "../../../types/sqLite";
 
@@ -31,7 +35,9 @@ async function getTemperatureHumiditySensorTemperature(
   fastify.get<IRoute>(
     "/temperature/:ieeeAddress/:from/:to",
     async (request, reply) => {
-      const count = request.query.count ? Number(request.query.count) : 30;
+      const count = request.query.count
+        ? Number(request.query.count)
+        : DEFAULT_SAMPLE_COUNT;
       if (!Number.isInteger(count) || count <= 0) {
         return reply.code(400).send({ error: "Invalid count" });
       }
@@ -51,7 +57,7 @@ async function getTemperatureHumiditySensorTemperature(
         ieeeAddress,
         getSqLiteTimeFormat(from),
         getSqLiteTimeFormat(to),
-        count,
+        count > MAX_SAMPLE_COUNT ? MAX_SAMPLE_COUNT : count,
       );
 
       return reply.code(200).send(values);
