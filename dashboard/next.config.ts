@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
       new URL("https://openweathermap.org/payload/api/media/file/*.png/"),
     ],
   },
+  turbopack: {
+    root: "/",
+  },
   /* config options here */
 };
 

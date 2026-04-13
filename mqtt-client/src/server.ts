@@ -21,7 +21,6 @@ async function startServer() {
       } else {
         initMockMqttClient(io, db);
       }
-
       server.decorate("db", db);
       server.register(v1Routes, { prefix: "/api/v1" });
 

@@ -4,7 +4,7 @@ export function useWeather() {
   const weather = useQuery({
     queryKey: ["WEATHER"],
     queryFn: () =>
-      fetch("api/weather").then((res) => {
+      fetch("/api/weather").then((res) => {
         if (!res.ok) {
           throw Error;
         }

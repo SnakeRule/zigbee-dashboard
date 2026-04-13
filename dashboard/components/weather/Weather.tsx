@@ -7,7 +7,6 @@ import { Text } from "../text/text";
 
 export function Weather() {
   const weather = useWeather();
-  console.log(weather.data);
 
   return (
     weather.data !== undefined && (
