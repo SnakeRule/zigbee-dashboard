@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={styles.body}>
         <Providers>
           <Header />
-          {children}
+          <main className={styles.main}>{children}</main>
         </Providers>
       </body>
     </html>

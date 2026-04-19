@@ -12,6 +12,7 @@ import {
   TimeScale,
 } from "chart.js";
 import "chartjs-adapter-luxon";
+import styles from "./lineChart.module.css";
 
 type LineChartProps = {
   data: {
@@ -21,6 +22,7 @@ type LineChartProps = {
   unit: string;
   min?: number;
   max?: number;
+  label: string;
 };
 
 ChartJS.register(
@@ -33,7 +35,7 @@ ChartJS.register(
   TimeScale,
 );
 
-export function LineChart({ data, unit, min, max }: LineChartProps) {
+export function LineChart({ data, unit, min, max, label }: LineChartProps) {
   const chartData: ChartData<"line", (number | Point | null)[]> = {
     datasets: [
       {
@@ -49,32 +51,52 @@ export function LineChart({ data, unit, min, max }: LineChartProps) {
   };
 
   return (
-    <Line
-      options={{
-        parsing: false,
-        scales: {
-          y: {
-            max: max,
-            min: min,
-          },
-          x: {
-            grid: {
-              drawTicks: false,
+    <div className={styles["line-chart-container"]}>
+      <Line
+        className={styles["line-chart"]}
+        options={{
+          clip: false,
+          maintainAspectRatio: false,
+          parsing: false,
+          elements: {
+            point: {
+              borderColor: "red",
             },
-            type: "time",
-            time: {
-              displayFormats: {
-                hour: "HH:mm",
-                day: "d.M.",
-                week: "d.M.",
-                month: "MM.yyyy",
+            line: {
+              borderColor: "red",
+
+              fill: "red",
+            },
+          },
+          plugins: {
+            tooltip: {
+              displayColors: false,
+              callbacks: {
+                label: (data) => `${label}: ${data.formattedValue} ${unit}`,
               },
-              tooltipFormat: "dd.MM.yyyy HH:mm",
             },
           },
-        },
-      }}
-      data={chartData}
-    />
+          scales: {
+            y: {
+              max: max,
+              min: min,
+            },
+            x: {
+              type: "time",
+              time: {
+                displayFormats: {
+                  hour: "HH:mm",
+                  day: "d.M.",
+                  week: "d.M.",
+                  month: "MM.yyyy",
+                },
+                tooltipFormat: "dd.MM.yyyy HH:mm",
+              },
+            },
+          },
+        }}
+        data={chartData}
+      />
+    </div>
   );
 }

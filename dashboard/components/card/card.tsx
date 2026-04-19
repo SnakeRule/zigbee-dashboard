@@ -3,8 +3,11 @@ import styles from "./card.module.css";
 
 type CardProps = {
   children: ReactNode;
+  className?: string;
 };
 
-export function Card({ children }: CardProps) {
-  return <div className={styles["card-container"]}>{children}</div>;
+export function Card({ children, className }: CardProps) {
+  return (
+    <div className={`${styles["card-container"]} ${className}`}>{children}</div>
+  );
 }

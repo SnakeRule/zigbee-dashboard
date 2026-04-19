@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify";
-import deviceRoutes from "./deviceRoutes";
+import zigbeeRoutes from "./zigbeeRoutes";
 
 async function v1Routes(fastify: FastifyInstance) {
-  fastify.register(deviceRoutes, { prefix: "/device" });
+  fastify.register(zigbeeRoutes, { prefix: "/zigbee" });
 }
 
 export default v1Routes;

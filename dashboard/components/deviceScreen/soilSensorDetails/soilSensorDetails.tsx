@@ -1,12 +1,12 @@
 "use client";
 
-import { LineChart } from "@/components/charts/lineChart";
 import { Text } from "@/components/text/text";
 import styles from "./soilSensorDetails.module.css";
-import { Card } from "@/components/card/card";
 import { useDeviceDetails } from "@/hooks/deviceDetails/useDeviceDetails";
 import { DeviceType } from "@/zigbee-devices/types";
 import { PlantSoilSensor } from "@/zigbee-devices/plantSoilSensor";
+import ChartCard from "../chartCard/chartCard";
+import DeviceName from "../deviceName/deviceName";
 
 type SoilSensorDetailsProps = { sensor: PlantSoilSensor };
 
@@ -39,68 +39,41 @@ export default function SoilSensorDetails({ sensor }: SoilSensorDetailsProps) {
   return (
     <div className={styles["details-container"]}>
       <div className={styles.headerContainer}>
-        <Text tag="h1" variant="text-xl">
-          {sensor.friendlyName}
-        </Text>
+        <DeviceName friendlyName={sensor.friendlyName} />
       </div>
       <div className={styles.cardsContainer}>
-        <Card>
-          <div className={styles.chartCard}>
-            <Text tag="h3" variant="text-regular">
-              Mullan kosteus
-            </Text>
-            <Text tag="p" variant="text-regular-bold">
-              {`${sensor.soil_moisture}%`}
-            </Text>
-            {moistureData.data && (
-              <LineChart data={moistureData.data} unit="C" min={0} max={100} />
-            )}
-          </div>
-        </Card>
-        <Card>
-          <div className={styles.chartCard}>
-            <Text tag="h3" variant="text-regular">
-              Valoisuus
-            </Text>
-            <Text tag="p" variant="text-regular-bold">
-              {`${sensor.illuminance}lx`}
-            </Text>
-            {illuminanceData.data && (
-              <LineChart data={illuminanceData.data} unit="lx" />
-            )}
-          </div>
-        </Card>
-        <Card>
-          <div className={styles.chartCard}>
-            <Text tag="h3" variant="text-regular">
-              Lämpötila
-            </Text>
-            <Text tag="p" variant="text-regular-bold">
-              {`${sensor.temperature}°C`}
-            </Text>
-            {temperatureData.data && (
-              <LineChart
-                data={temperatureData.data}
-                unit="C"
-                min={10}
-                max={35}
-              />
-            )}
-          </div>
-        </Card>
-        <Card>
-          <div className={styles.chartCard}>
-            <Text tag="h3" variant="text-regular">
-              Ilmankosteus
-            </Text>
-            <Text tag="p" variant="text-regular-bold">
-              {`${sensor.humidity}%`}
-            </Text>
-            {humidityData.data && (
-              <LineChart data={humidityData.data} unit="%" min={0} max={100} />
-            )}
-          </div>
-        </Card>
+        <ChartCard
+          currentValue={sensor.soil_moisture}
+          deviceData={moistureData}
+          label="Mullan kosteus"
+          unit="%"
+          min={0}
+          max={100}
+        />
+        <ChartCard
+          currentValue={sensor.illuminance}
+          deviceData={illuminanceData}
+          label="Valoisuus"
+          unit="lx"
+        />
+      </div>
+      <div className={styles.cardsContainer}>
+        <ChartCard
+          currentValue={sensor.temperature}
+          deviceData={temperatureData}
+          label="Lämpötila"
+          unit="°C"
+          min={10}
+          max={40}
+        />
+        <ChartCard
+          currentValue={sensor.humidity}
+          deviceData={humidityData}
+          label="Ilmankosteus"
+          unit="°%"
+          min={0}
+          max={100}
+        />
       </div>
     </div>
   );

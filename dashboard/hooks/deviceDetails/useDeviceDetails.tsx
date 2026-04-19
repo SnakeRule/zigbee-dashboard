@@ -12,19 +12,19 @@ function getTargetUrl(
   switch (sensor) {
     case DeviceType.TEMPERATURE_SENSOR: {
       return target === "humidity"
-        ? "/api/v1/device/th/humidity/"
-        : "/api/v1/device/th/temperature/";
+        ? "/api/v1/zigbee/th/humidity/"
+        : "/api/v1/zigbee/th/temperature/";
     }
     case DeviceType.PLANT_SOIL_SENSOR: {
       switch (target) {
         case "humidity":
-          return "/api/v1/device/soil/humidity/";
+          return "/api/v1/zigbee/soil/humidity/";
         case "illuminance":
-          return "/api/v1/device/soil/illuminance/";
+          return "/api/v1/zigbee/soil/illuminance/";
         case "soil_moisture":
-          return "/api/v1/device/soil/moisture/";
+          return "/api/v1/zigbee/soil/moisture/";
         case "temperature":
-          return "/api/v1/device/soil/temperature/";
+          return "/api/v1/zigbee/soil/temperature/";
       }
     }
   }

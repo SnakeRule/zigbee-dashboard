@@ -52,4 +52,6 @@ export function initMockMqttClient(
       socket.emit(topic, state[topic]);
     });
   });
+
+  return undefined;
 }

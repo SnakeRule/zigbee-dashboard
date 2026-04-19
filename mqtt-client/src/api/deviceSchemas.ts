@@ -1,5 +1,7 @@
 import Type from "typebox";
 
+// DEVICE DATA QUERY
+
 const DeviceQueryQueryString = Type.Object({
   count: Type.Optional(Type.Integer()),
 });
@@ -24,4 +26,19 @@ export const DeviceQueryRoute = {
     }),
   },
   querystring: DeviceQueryQueryString,
+};
+
+// RENAME DEVICE
+
+const RenameDeviceBody = Type.Object({
+  name: Type.String(),
+});
+
+const RenameDeviceParams = Type.Object({
+  friendlyName: Type.String(),
+});
+
+export const RenameDeviceRoute = {
+  body: RenameDeviceBody,
+  params: RenameDeviceParams,
 };

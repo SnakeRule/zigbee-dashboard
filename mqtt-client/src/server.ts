@@ -16,12 +16,12 @@ const io = initWebsocketServer(server);
 async function startServer() {
   try {
     if (db) {
-      if (USE_MOCK === "false") {
-        initMqttClient(io, db);
-      } else {
-        initMockMqttClient(io, db);
-      }
+      const mqttClient =
+        USE_MOCK === "false"
+          ? initMqttClient(io, db)
+          : initMockMqttClient(io, db);
       server.decorate("db", db);
+      server.decorate("mqttClient", mqttClient);
       server.register(v1Routes, { prefix: "/api/v1" });
 
       const res = await server.listen({

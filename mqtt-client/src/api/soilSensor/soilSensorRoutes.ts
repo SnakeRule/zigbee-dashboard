@@ -1,8 +1,8 @@
 import { FastifyInstance } from "fastify";
-import getSoilSensorHumidity from "../soilSensor/values/humidity/get";
-import getSoilSensorMoisture from "../soilSensor/values/moisture/get";
-import getSoilSensorTemperature from "../soilSensor/values/temperature/get";
-import getSoilSensorIlluminance from "../soilSensor/values/illuminance/get";
+import getSoilSensorHumidity from "./values/humidity/get";
+import getSoilSensorMoisture from "./values/moisture/get";
+import getSoilSensorTemperature from "./values/temperature/get";
+import getSoilSensorIlluminance from "./values/illuminance/get";
 
 async function soilSensorRoutes(fastify: FastifyInstance) {
   fastify.register(getSoilSensorHumidity);

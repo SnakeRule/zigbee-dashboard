@@ -1,0 +1,20 @@
+.chart-card {
+    display: flex;
+    width: 100%;
+    min-height: 0;
+    padding: var(--spacing-xxs);
+}
+
+.chart-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart-card-labels-container {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-xxs);
+    margin-top: var(--spacing-xxs);
+}

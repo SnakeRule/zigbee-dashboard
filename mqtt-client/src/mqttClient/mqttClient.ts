@@ -48,4 +48,6 @@ export function initMqttClient(
       socket.emit(topic, stateHandler.getFromMqttCache(topic));
     });
   });
+
+  return client;
 }
