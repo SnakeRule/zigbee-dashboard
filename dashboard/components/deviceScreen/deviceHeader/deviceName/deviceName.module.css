@@ -1,0 +1,23 @@
+.device-name-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-xs);
+    justify-content: space-around;
+    align-content: center;
+}
+
+.device-rename-button {
+    padding: 0;
+}
+
+.device-name-input {
+    border-radius: var(--border-radius-xs);
+    border-width: 1px;
+    width: 80px;
+    height: 25px;
+    padding-left: var(--spacing-xxs);
+    padding-right: var(--spacing-xxs);
+    font-size: 1rem;
+    display: flex;
+}

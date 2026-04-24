@@ -7,13 +7,15 @@ type useRenameDeviceProps = {
 export function useRenameDevice({ friendlyName }: useRenameDeviceProps) {
   const renameMutation = useMutation({
     mutationFn: async (newName: string) => {
-      const res = await fetch(`/api/v1/zigbee/device/name/${friendlyName}`, {
-        body: JSON.stringify({
-          name: newName,
-        }),
-        method: "PATCH",
-      });
-      console.log(res);
+      const res = await fetch(
+        `/api/v1/zigbee/device/name/${encodeURIComponent(friendlyName)}`,
+        {
+          body: JSON.stringify({
+            name: newName,
+          }),
+          method: "PATCH",
+        },
+      );
       if (res.ok) {
         return Promise.resolve();
       }

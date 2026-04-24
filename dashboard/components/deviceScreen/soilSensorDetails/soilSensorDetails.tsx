@@ -1,12 +1,10 @@
 "use client";
 
-import { Text } from "@/components/text/text";
 import styles from "./soilSensorDetails.module.css";
 import { useDeviceDetails } from "@/hooks/deviceDetails/useDeviceDetails";
 import { DeviceType } from "@/zigbee-devices/types";
 import { PlantSoilSensor } from "@/zigbee-devices/plantSoilSensor";
 import ChartCard from "../chartCard/chartCard";
-import DeviceName from "../deviceName/deviceName";
 
 type SoilSensorDetailsProps = { sensor: PlantSoilSensor };
 
@@ -37,10 +35,7 @@ export default function SoilSensorDetails({ sensor }: SoilSensorDetailsProps) {
   });
 
   return (
-    <div className={styles["details-container"]}>
-      <div className={styles.headerContainer}>
-        <DeviceName friendlyName={sensor.friendlyName} />
-      </div>
+    <>
       <div className={styles.cardsContainer}>
         <ChartCard
           currentValue={sensor.soil_moisture}
@@ -75,6 +70,6 @@ export default function SoilSensorDetails({ sensor }: SoilSensorDetailsProps) {
           max={100}
         />
       </div>
-    </div>
+    </>
   );
 }

@@ -1,19 +1,3 @@
-.details-container {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-    padding: var(--spacing-xs);
-    height: 100%;
-    min-height: 0;
-}
-
-.headerContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
 .cardsContainer {
     display: flex;
     flex-direction: row;
