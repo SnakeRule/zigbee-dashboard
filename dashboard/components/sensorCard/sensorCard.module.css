@@ -3,12 +3,14 @@
     flex-direction: column; 
     gap: var(--spacing-xs);
     align-items: center;
+    padding-right: var(--spacing-xxs);
 }
 
 .sensor-name-label {
     justify-self: center;
     align-self: center;
     margin: 0px;
+    line-height: 1;
     text-align: center;
     word-break: break-word; /* Allows long unbreakable text to wrap instead of blowing out the card */
 }

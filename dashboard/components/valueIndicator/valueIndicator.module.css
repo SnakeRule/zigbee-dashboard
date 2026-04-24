@@ -1,0 +1,58 @@
+.value-indicator-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 18px;
+}
+
+.value-min-max-container {
+    display:flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.value-indicator-slider-container {
+    display:flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+    position: relative;
+}
+
+.value-indicator-dot {
+    width: 8px;
+    height: 8px;
+    background-color: black;
+    border-radius: 8px;
+}
+
+.value-indicator-moving-dot {
+    composes: value-indicator-dot;
+    position: absolute;
+    left: 0;
+    background-color: var(--primary);
+    text-align: center;
+}
+
+.value-indicator-line {
+    height: 2px;
+    background-color: black;
+    flex: 1;
+}
+
+.current-value {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 100%;
+}
+
+.current-value-large {
+    composes: current-value;
+    transform: translateX(-65%);
+}

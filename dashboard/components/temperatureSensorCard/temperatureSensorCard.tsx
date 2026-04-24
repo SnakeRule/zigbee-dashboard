@@ -17,12 +17,18 @@ export function TemperatureSensorCard({ sensors }: TemperatureSensorCardProps) {
           ieeeAddress={sensor.ieeeAddress}
           values={[
             {
-              icon: <Thermometer size={20} />,
-              value: `${sensor.temperature?.toFixed(1).toString()}°C`,
+              icon: <Thermometer size={26} />,
+              value: sensor.temperature?.toFixed(1) ?? "",
+              unit: "°C",
+              min: 10,
+              max: 40,
             },
             {
-              icon: <Droplet size={20} />,
-              value: `${sensor.humidity?.toFixed(1).toString()}%`,
+              icon: <Droplet size={26} />,
+              value: sensor.humidity?.toFixed(1) ?? "",
+              unit: "%",
+              min: 0,
+              max: 100,
             },
           ]}
         />

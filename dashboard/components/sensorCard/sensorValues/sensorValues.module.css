@@ -1,7 +1,6 @@
 .device-container {
     display:flex;
     flex: 1;
-    gap: var(--spacing-xs);
     flex-direction: column;
     padding-top: var(--spacing-xs);
     padding-bottom: var(--spacing-xs);

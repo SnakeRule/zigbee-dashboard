@@ -17,20 +17,32 @@ export function PlantSoilSensorCard({ sensors }: PlantSoilCardProps) {
           ieeeAddress={sensor.ieeeAddress}
           values={[
             {
-              icon: <Flower2 size={20} />,
+              icon: <Flower2 size={26} />,
               value: `${sensor.soil_moisture?.toFixed(1).toString()}%`,
+              unit: "%",
+              min: 0,
+              max: 100,
             },
             {
-              icon: <Sun size={20} />,
-              value: `${sensor.illuminance?.toString()}lx`,
+              icon: <Sun size={26} />,
+              value: "10000",
+              unit: "lx",
+              min: 0,
+              max: 10000,
             },
             {
-              icon: <Thermometer size={20} />,
-              value: `${sensor.temperature?.toFixed(1).toString()}°C`,
+              icon: <Thermometer size={26} />,
+              value: sensor.temperature?.toFixed(1) ?? "",
+              unit: "°C",
+              min: 10,
+              max: 40,
             },
             {
-              icon: <Droplet size={20} />,
-              value: `${sensor.humidity?.toFixed(1).toString()}%`,
+              icon: <Droplet size={26} />,
+              value: sensor.humidity?.toFixed(1) ?? "",
+              unit: "%",
+              min: 0,
+              max: 100,
             },
           ]}
         />

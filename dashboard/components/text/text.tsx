@@ -16,6 +16,8 @@ type TextProps = {
     | "h5"
     | "h6";
   variant:
+    | "text-regular-extra-small"
+    | "text-regular-small"
     | "text-regular"
     | "text-regular-bold"
     | "text-xl"
