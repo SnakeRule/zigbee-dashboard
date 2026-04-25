@@ -42,3 +42,13 @@ export const RenameDeviceRoute = {
   body: RenameDeviceBody,
   params: RenameDeviceParams,
 };
+
+// PERMIT JOIN
+
+const PermitJoinQueryString = Type.Object({
+  time: Type.Integer({ maximum: 250, minimum: 0 }),
+});
+
+export const PermitJoinRoute = {
+  querystring: PermitJoinQueryString,
+};

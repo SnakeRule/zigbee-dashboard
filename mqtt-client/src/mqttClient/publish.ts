@@ -10,3 +10,10 @@ export function changeDeviceName(
     JSON.stringify({ from: oldName, to: newName }),
   );
 }
+
+export function publishPermitJoin(client: MqttClient, time: number) {
+  client.publish(
+    "zigbee2mqtt/bridge/request/permit_join",
+    JSON.stringify({ time }),
+  );
+}
