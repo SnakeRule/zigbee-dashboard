@@ -18,14 +18,14 @@ export function PlantSoilSensorCard({ sensors }: PlantSoilCardProps) {
           values={[
             {
               icon: <Flower2 size={26} />,
-              value: `${sensor.soil_moisture?.toFixed(1).toString()}%`,
+              value: sensor.soil_moisture?.toFixed(1) ?? "",
               unit: "%",
               min: 0,
               max: 100,
             },
             {
               icon: <Sun size={26} />,
-              value: "10000",
+              value: sensor.illuminance?.toFixed(1) ?? "",
               unit: "lx",
               min: 0,
               max: 10000,

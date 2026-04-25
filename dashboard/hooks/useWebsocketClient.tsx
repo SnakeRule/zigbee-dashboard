@@ -6,6 +6,10 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 
+type useWebsocketClientProps = {
+  onPermitJoin: (time: number) => void;
+};
+
 const WEBSOCKET_URL = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
 
 function handleDevicesMsg(msg: RawDevice[]) {
@@ -20,7 +24,9 @@ function handleDevicesMsg(msg: RawDevice[]) {
   return newDevices;
 }
 
-export default function useWebsocketClient() {
+export default function useWebsocketClient({
+  onPermitJoin,
+}: useWebsocketClientProps) {
   const [connected, setConnected] = useState(false);
   const [devicesList, setDevicesList] = useState<Record<string, ZigbeeDevice>>(
     {},
@@ -44,6 +50,11 @@ export default function useWebsocketClient() {
     });
 
     socket.onAny((event: string, msg) => {
+      if (event === "zigbee2mqtt/bridge/response/permit_join") {
+        console.log(msg);
+        onPermitJoin(msg.data.time);
+      }
+
       if (event === "zigbee2mqtt/bridge/devices") {
         setDevicesList(handleDevicesMsg(msg));
         return;

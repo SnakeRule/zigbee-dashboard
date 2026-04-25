@@ -20,8 +20,6 @@ type SensorValuesProps = {
 };
 
 export function SensorValues({ name, ieeeAddress, values }: SensorValuesProps) {
-  console.log(values.map((value) => value));
-
   return (
     <Link
       href={`/device/${ieeeAddress}`}

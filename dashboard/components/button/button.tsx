@@ -10,8 +10,6 @@ type ButtonProps = {
 };
 
 export function Button({ children, className, onClick }: ButtonProps) {
-  console.log(className);
-  console.log("Hello?");
   return (
     <button onClick={onClick} className={`${styles.button} ${className}`}>
       {children}

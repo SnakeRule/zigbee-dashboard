@@ -3,7 +3,7 @@
 import { useWeather } from "@/hooks/useWeather";
 import Image from "next/image";
 import styles from "./weather.module.css";
-import { Text } from "../text/text";
+import { Text } from "../../text/text";
 
 export function Weather() {
   const weather = useWeather();

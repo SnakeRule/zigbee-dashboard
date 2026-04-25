@@ -2,7 +2,7 @@
 
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { Text } from "../text/text";
+import { Text } from "../../text/text";
 
 const TIME_FORMAT = "HH:mm:ss";
 
@@ -10,7 +10,10 @@ export function Clock() {
   const [time, setTime] = useState(dayjs().format(TIME_FORMAT));
 
   useEffect(() => {
-    const interval = setInterval(() => setTime(dayjs().format(TIME_FORMAT)));
+    const interval = setInterval(
+      () => setTime(dayjs().format(TIME_FORMAT)),
+      1000,
+    );
 
     return () => {
       clearInterval(interval);
