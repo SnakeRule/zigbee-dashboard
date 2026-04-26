@@ -1,7 +1,7 @@
 "use client";
 
 import { DeviceType } from "@/zigbee-devices/types";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { DateTime } from "luxon";
 import { useDeviceDetailsProps, useDeviceDetailsReturnValue } from "./types";
 
@@ -30,25 +30,20 @@ function getTargetUrl(
   }
 }
 
-const getQueryKeys = (
-  ieeeAddress: string,
-  currentValue: number,
-  target: string,
-) => ["DEVICE_DETAILS", ieeeAddress, currentValue, target];
-
 export function useDeviceDetails({
-  ieeAddress,
+  ieeeAddress,
   currentValue,
   target,
   sensor,
+  timeFrom,
 }: useDeviceDetailsProps) {
   const data = useQuery<useDeviceDetailsReturnValue>({
-    queryKey: [getQueryKeys(ieeAddress, currentValue, target)],
+    queryKey: [ieeeAddress, currentValue, target, timeFrom],
+    placeholderData: keepPreviousData,
     queryFn: async () => {
-      const from = DateTime.now().minus({ days: 7 }).toISO();
       const to = DateTime.now().toISO();
       const res = await fetch(
-        `${getTargetUrl(sensor, target)}${ieeAddress}/${encodeURIComponent(from)}/${encodeURIComponent(to)}?count=30`,
+        `${getTargetUrl(sensor, target)}${ieeeAddress}/${encodeURIComponent(timeFrom)}/${encodeURIComponent(to)}?count=30`,
       );
       if (!res.ok) {
         throw Error();

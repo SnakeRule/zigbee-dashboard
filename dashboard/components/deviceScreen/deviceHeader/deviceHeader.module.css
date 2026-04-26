@@ -1,6 +1,12 @@
 .header-container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     height: 50px;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.header-content-container {
+    flex: 1;
 }

@@ -15,7 +15,7 @@ import "chartjs-adapter-luxon";
 import styles from "./lineChart.module.css";
 
 type LineChartProps = {
-  data: {
+  data?: {
     value: number;
     created_at: string;
   }[];
@@ -39,13 +39,13 @@ export function LineChart({ data, unit, min, max, label }: LineChartProps) {
   const chartData: ChartData<"line", (number | Point | null)[]> = {
     datasets: [
       {
-        data: data.map((item) => ({
-          y: item.value,
-          x: DateTime.fromFormat(item.created_at, "yyyy-MM-dd HH:mm:ss", {
-            zone: "utc",
-          }).toMillis(),
-        })),
-        label: `Lämpötila (${unit})`,
+        data:
+          data?.map((item) => ({
+            y: item.value,
+            x: DateTime.fromFormat(item.created_at, "yyyy-MM-dd HH:mm:ss", {
+              zone: "utc",
+            }).toMillis(),
+          })) ?? [],
       },
     ],
   };

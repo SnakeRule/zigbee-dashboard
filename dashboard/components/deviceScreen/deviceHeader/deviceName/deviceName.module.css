@@ -3,7 +3,7 @@
     flex-direction: row;
     align-items: center;
     gap: var(--spacing-xs);
-    justify-content: space-around;
+    justify-content: center;
     align-content: center;
 }
 

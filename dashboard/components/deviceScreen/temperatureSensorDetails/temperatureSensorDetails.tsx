@@ -2,45 +2,40 @@
 
 import { TemperatureHumiditySensor } from "@/zigbee-devices/temperatureHumiditySensor";
 import styles from "./temperatureSensorDetails.module.css";
-import { useDeviceDetails } from "@/hooks/deviceDetails/useDeviceDetails";
-import { DeviceType } from "@/zigbee-devices/types";
 import ChartCard from "../chartCard/chartCard";
 
-type TemperatureSensorDetailsProps = { sensor: TemperatureHumiditySensor };
+type TemperatureSensorDetailsProps = {
+  sensor: TemperatureHumiditySensor;
+  timeFrom: string;
+};
 
 export default function TemperatureSensorDetails({
   sensor,
+  timeFrom,
 }: TemperatureSensorDetailsProps) {
-  const temperatureData = useDeviceDetails({
-    ieeAddress: sensor.ieeeAddress,
-    currentValue: sensor.temperature ?? 0,
-    sensor: DeviceType.TEMPERATURE_SENSOR,
-    target: "temperature",
-  });
-  const humidityData = useDeviceDetails({
-    ieeAddress: sensor.ieeeAddress,
-    currentValue: sensor.humidity ?? 0,
-    sensor: DeviceType.TEMPERATURE_SENSOR,
-    target: "humidity",
-  });
-
   return (
     <div className={styles.cardsContainer}>
       <ChartCard
         currentValue={sensor.temperature}
-        deviceData={temperatureData}
         label="Lämpötila"
         unit="°C"
         min={10}
         max={40}
+        ieeeAddress={sensor.ieeeAddress}
+        sensor={sensor.deviceType}
+        target="temperature"
+        timeFrom={timeFrom}
       />
       <ChartCard
         currentValue={sensor.humidity}
-        deviceData={humidityData}
         label="Ilmankosteus"
         unit="°%"
         min={0}
         max={100}
+        ieeeAddress={sensor.ieeeAddress}
+        sensor={sensor.deviceType}
+        target="humidity"
+        timeFrom={timeFrom}
       />
     </div>
   );

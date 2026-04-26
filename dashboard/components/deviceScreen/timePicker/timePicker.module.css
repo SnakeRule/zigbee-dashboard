@@ -1,0 +1,13 @@
+.time-picker-container {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-xxs);
+    padding: var(--spacing-md);
+    padding-right: 0;
+    padding-left: 0;
+    justify-content: flex-end;
+}
+
+.selected {
+    background-color: #8fe298;
+}
