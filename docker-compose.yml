@@ -23,7 +23,7 @@ services:
         depends_on:
             - mosquitto
         volumes:
-            - ./data:/app/data
+            - ./zigbee2mqtt/data:/app/data
             - /run/udev:/run/udev:ro
         ports:
             # Frontend port
