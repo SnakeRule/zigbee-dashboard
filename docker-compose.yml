@@ -58,4 +58,17 @@ services:
             - zigbee2mqtt
         ports:
             - 8000:8000
+    dashboard:
+        image: ghcr.io/snakerule/zigbee-dashboard/dashboard:main
+        pull_policy: always
+        restart: unless-stopped
+        logging:
+            driver: "json-file"
+            options:
+                max-size: "10m"
+                max-file: "3"
+        ports:
+            - 3000:3000
+        environment:
+            - WEATHER_API_KEY=
 
