@@ -1,0 +1,27 @@
+.forecast-container {
+    padding-top: var(--spacing-xs);
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    overflow-x: auto;
+    gap: var(--spacing-xs);
+    padding-bottom: var(--spacing-md);
+}
+
+.forecast-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    padding-top: var(--spacing-xs);
+    padding-bottom: var(--spacing-xs);
+}
+
+.forecast-text-icon-container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    gap: var(--spacing-xxs);
+    align-items: center;
+    justify-content: center;
+}
